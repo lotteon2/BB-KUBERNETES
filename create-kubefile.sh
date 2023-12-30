@@ -8,7 +8,7 @@ for ((i=0; i<${#services[@]}; i++)); do
   service=${services[i]}
   service_port=${port[i]}
   # Create the service folder if it doesn't exist
-  mkdir -p "service/$service"
+  mkdir -p "database/$service"
 
 
   # Create local-service.yml for each service
@@ -37,8 +37,14 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: $service_port
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
           env:
             - name: USE_PROFILE
+              value: "prod"
+            - name: SPRING_CONFIG_ACTIVATE_ON_PROFILE
               value: "prod"
           readinessProbe:
             httpGet:

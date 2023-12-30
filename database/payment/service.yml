@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: product-db
+  name: payment-db
   namespace: prod
   labels:
-    app: product-db
+    app: payment-db
 spec:
   type: ClusterIP
   ports:
-    - name: product-db
+    - name: payment-db
       port: 3306
   selector:
-    app: product-db
+    app: payment-db
 

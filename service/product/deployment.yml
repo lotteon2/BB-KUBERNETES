@@ -22,6 +22,10 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8800
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
           env:
             - name: USE_PROFILE
               value: "prod"

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-product
+  name: pv-notification
   namespace: prod
   labels:
     location: prod
@@ -13,7 +13,7 @@ spec:
   # 볼륨 읽기 쓰기 옵션
   accessModes:
     - ReadWriteOnce
-  storageClassName: product-pv-class # 특정 스토리지 클래스가 있는 pv는 해당 스토리지 클래스에 맞는 pvc 와만 연결됨
+  storageClassName: notification-pv-class # 특정 스토리지 클래스가 있는 pv는 해당 스토리지 클래스에 맞는 pvc 와만 연결됨
   persistentVolumeReclaimPolicy: Retain # pv가 해제 되었을 때 초기화 옵션
   # pv 볼륨 플러그인 명시
   # path 는 마운트 시킬 로컬 서버의 경로
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: pvc-product
+  name: pvc-notification
   namespace: prod
 spec:
   accessModes:
@@ -32,7 +32,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: product-pv-class
+  storageClassName: notification-pv-class
   selector:
     matchLabels:
       location: prod

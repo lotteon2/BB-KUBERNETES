@@ -1,42 +1,39 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: product-service-mysql
+  name: giftcard-db
   namespace: prod
 spec:
-  serviceName: mysql
-  replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: giftcard-db
+  serviceName: giftcard-db
+  replicas: 1
   template:
     metadata:
       labels:
-        app: mysql
+        app: giftcard-db
     spec:
       containers:
-        - name: mysql
+        - name: giftcard-db
           image: mysql:latest
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: "123456"
             - name: MYSQL_DATABASE
-              value: product
+              value: giftcard
           ports:
-            - containerPort: 3306
-              name: mysql
+            - name: giftcard-db
+              containerPort: 3306
           volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
-            - name: mysql-config
+            - name: giftcard-initdb
+              mountPath: /docker-entrypoint-initdb.d
+            - name: mysql
               mountPath: /etc/mysql/conf.d
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
           # 애플리케이션이 시작된 뒤 초기화 작업이 마무리되어 준비되었는지 검사
           readinessProbe:
             tcpSocket:
@@ -50,17 +47,12 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 20
       volumes:
-        - name: auth-initdb
+        - name: giftcard-initdb
           configMap:
-            name: auth-initdb-config
-        - name: mysql-config
+            name: giftcard-initdb-config
+        - name: mysql
           configMap:
-            name: mysql-config
-  volumeClaimTemplates:
-    - metadata:
-        name: mysql-persistent-storage
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 1Gi
+            name: mysql
+        - name: data
+          persistentVolumeClaim:
+            claimName: pvc-giftcard
