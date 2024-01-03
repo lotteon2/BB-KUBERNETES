@@ -16,6 +16,8 @@ spec:
       labels:
         app: product-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud5
       containers:
         - name: product-service
           image: nowgnas/bb:product
@@ -24,8 +26,8 @@ spec:
             - containerPort: 8800
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

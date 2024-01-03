@@ -16,6 +16,8 @@ spec:
       labels:
         app: order-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud4
       containers:
         - name: order-service
           image: nowgnas/bb:order
@@ -24,8 +26,8 @@ spec:
             - containerPort: 8900
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

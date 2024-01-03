@@ -16,6 +16,8 @@ spec:
       labels:
         app: payment-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud5
       containers:
         - name: payment-service
           image: nowgnas/bb:payment
@@ -24,8 +26,8 @@ spec:
             - containerPort: 8100
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

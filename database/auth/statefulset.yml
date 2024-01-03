@@ -14,6 +14,8 @@ spec:
       labels:
         app: auth-db
     spec:
+#      nodeSelector:
+#        nodegroup: cloud2
       containers:
         - name: auth-db
           image: mysql:latest
@@ -32,8 +34,11 @@ spec:
               mountPath: /etc/mysql/conf.d
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "256Mi"
+              cpu: "375m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
           # 애플리케이션이 시작된 뒤 초기화 작업이 마무리되어 준비되었는지 검사
           readinessProbe:
             tcpSocket:

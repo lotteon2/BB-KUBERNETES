@@ -16,12 +16,21 @@ spec:
       labels:
         app: config-service
     spec:
+#      nodeSelector:
+#        nodegroup: util
       containers:
         - name: config-service
           image: nowgnas/bb:config
           imagePullPolicy: Always
           ports:
             - containerPort: 8888
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "256m"
+            limits:
+              memory: "400Mi"
+              cpu: "300m"
           envFrom:
             - configMapRef:
                 name: config-env

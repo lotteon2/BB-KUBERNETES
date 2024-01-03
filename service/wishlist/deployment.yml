@@ -16,6 +16,8 @@ spec:
       labels:
         app: wishlist-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud2
       containers:
         - name: wishlist-service
           image: nowgnas/bb:wishlist
@@ -24,8 +26,8 @@ spec:
             - containerPort: 8500
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

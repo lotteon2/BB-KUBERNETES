@@ -16,6 +16,8 @@ spec:
       labels:
         app: zookeeper
     spec:
+#      nodeSelector:
+#        nodegroup: util
       containers:
         - name: zookeeper
           image: wurstmeister/zookeeper

@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: apigateway-service
   namespace: prod
+#  annotations:
+#    alb.ingress.kubernetes.io/healthcheck-path: /actuator/health
 spec:
   type: NodePort
   ports:

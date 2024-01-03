@@ -14,6 +14,8 @@ spec:
       labels:
         app: redis
     spec:
+#      nodeSelector:
+#        nodegroup: util
       containers:
         - name: redis
           image: redis:latest
@@ -30,8 +32,8 @@ spec:
             - "123456"
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              cpu: 250m
+              memory: 512Mi
           # 애플리케이션이 시작된 뒤 초기화 작업이 마무리되어 준비되었는지 검사
           readinessProbe:
             tcpSocket:

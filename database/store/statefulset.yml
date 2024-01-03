@@ -14,6 +14,8 @@ spec:
       labels:
         app: store-db
     spec:
+#      nodeSelector:
+#        nodegroup: cloud5
       containers:
         - name: store-db
           image: mysql:latest
@@ -32,8 +34,8 @@ spec:
               mountPath: /etc/mysql/conf.d
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "300Mi"
+              cpu: "375m"
           # 애플리케이션이 시작된 뒤 초기화 작업이 마무리되어 준비되었는지 검사
           readinessProbe:
             tcpSocket:

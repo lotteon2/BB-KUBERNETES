@@ -16,6 +16,8 @@ spec:
       labels:
         app: apigateway-service
     spec:
+#      nodeSelector:
+#        nodegroup: util
       containers:
         - name: apigateway-service
           image: nowgnas/bb:apigateway
@@ -24,8 +26,11 @@ spec:
             - containerPort: 8000
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "256Mi"
+              cpu: "256m"
+            limits:
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

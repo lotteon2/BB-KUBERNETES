@@ -16,6 +16,8 @@ spec:
       labels:
         app: delivery-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud
       containers:
         - name: delivery-service
           image: nowgnas/bb:delivery
@@ -24,8 +26,11 @@ spec:
             - containerPort: 8300
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "256Mi"
+              cpu: "256m"
+            limits:
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"

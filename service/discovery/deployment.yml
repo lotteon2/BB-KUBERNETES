@@ -16,12 +16,21 @@ spec:
       labels:
         app: discovery-service
     spec:
+#      nodeSelector:
+#        nodegroup: util
       containers:
         - name: discovery-service
           image: nowgnas/bb:discovery
           imagePullPolicy: Always
           ports:
             - containerPort: 8761
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "125m"
+            limits:
+              memory: "384Mi"
+              cpu: "250m"
           env:
             - name: USE_PROFILE
               value: prod

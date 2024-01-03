@@ -16,6 +16,8 @@ spec:
       labels:
         app: giftcard-service
     spec:
+#      nodeSelector:
+#        nodegroup: cloud3
       containers:
         - name: giftcard-service
           image: nowgnas/bb:giftcard
@@ -24,8 +26,8 @@ spec:
             - containerPort: 9100
           resources:
             requests:
-              cpu: 500m
-              memory: 1Gi
+              memory: "350Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"
