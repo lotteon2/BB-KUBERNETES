@@ -26,9 +26,6 @@ spec:
             - containerPort: 8300
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "256m"
-            limits:
               memory: "400Mi"
               cpu: "300m"
           env:
