@@ -1,40 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: order-service
   namespace: prod
   labels:
-    app: payment-service
+    app: order-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app: order-service
   template:
     metadata:
-      name: payment-service
+      name: order-service
       labels:
-        app: payment-service
+        app: order-service
     spec:
 #      nodeSelector:
-#        nodegroup: cloud5
+#        nodegroup: cloud4
       containers:
-        - name: payment-service
-          image: nowgnas/bb:payment
+        - name: order-service
+          image: nowgnas/bb:order
           imagePullPolicy: Always
           ports:
-            - containerPort: 8100
+            - containerPort: 8900
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "400m"
+              memory: "400Mi"
+              cpu: "300m"
           env:
             - name: USE_PROFILE
               value: "prod"
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8100
+              port: 8900
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2
@@ -42,7 +42,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8100
+              port: 8900
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2

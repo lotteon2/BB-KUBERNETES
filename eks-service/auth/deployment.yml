@@ -1,40 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: auth-service
   namespace: prod
   labels:
-    app: payment-service
+    app: auth-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app: auth-service
   template:
     metadata:
-      name: payment-service
+      name: auth-service
       labels:
-        app: payment-service
+        app: auth-service
     spec:
 #      nodeSelector:
-#        nodegroup: cloud5
+#        nodegroup: cloud2
       containers:
-        - name: payment-service
-          image: nowgnas/bb:payment
+        - name: auth-service
+          image: nowgnas/bb:auth
           imagePullPolicy: Always
           ports:
-            - containerPort: 8100
+            - containerPort: 9000
           resources:
             requests:
               memory: "512Mi"
-              cpu: "400m"
+              cpu: "512m"
           env:
             - name: USE_PROFILE
               value: "prod"
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8100
+              port: 9000
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2
@@ -42,7 +42,7 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8100
+              port: 9000
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2

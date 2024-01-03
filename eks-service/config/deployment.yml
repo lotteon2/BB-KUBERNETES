@@ -1,40 +1,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: config-service
   namespace: prod
   labels:
-    app: payment-service
+    app: config-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app: config-service
   template:
     metadata:
-      name: payment-service
+      name: config-service
       labels:
-        app: payment-service
+        app: config-service
     spec:
 #      nodeSelector:
-#        nodegroup: cloud5
+#        nodegroup: util
       containers:
-        - name: payment-service
-          image: nowgnas/bb:payment
+        - name: config-service
+          image: nowgnas/bb:config
           imagePullPolicy: Always
           ports:
-            - containerPort: 8100
+            - containerPort: 8888
           resources:
             requests:
-              memory: "512Mi"
-              cpu: "400m"
-          env:
-            - name: USE_PROFILE
-              value: "prod"
+              memory: "256Mi"
+              cpu: "256m"
+            limits:
+              memory: "400Mi"
+              cpu: "300m"
+          envFrom:
+            - configMapRef:
+                name: config-env
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8100
+              port: 8888
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2
@@ -42,9 +45,8 @@ spec:
           livenessProbe:
             httpGet:
               path: /actuator/health/liveness
-              port: 8100
+              port: 8888
             initialDelaySeconds: 30
             periodSeconds: 30
             timeoutSeconds: 2
       restartPolicy: Always
-
